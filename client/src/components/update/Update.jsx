@@ -16,7 +16,7 @@ const Update = ({ setOpenUpdate, user }) => {
   });
 
   const upload = async (file) => {
-    console.log(file)
+    console.log(file);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -28,7 +28,7 @@ const Update = ({ setOpenUpdate, user }) => {
   };
 
   const handleChange = (e) => {
-    setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setTexts((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const queryClient = useQueryClient();
@@ -48,17 +48,17 @@ const Update = ({ setOpenUpdate, user }) => {
   const handleClick = async (e) => {
     e.preventDefault();
 
-    //TODO: find a better way to get image URL
-    
+    // TODO: find a better way to get image URL
     let coverUrl;
     let profileUrl;
     coverUrl = cover ? await upload(cover) : user.coverPic;
     profileUrl = profile ? await upload(profile) : user.profilePic;
-    
+
     mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
     setOpenUpdate(false);
     setCover(null);
     setProfile(null);
+  };
 
   return (
     <div className="update">
@@ -70,11 +70,7 @@ const Update = ({ setOpenUpdate, user }) => {
               <span>Cover Picture</span>
               <div className="imgContainer">
                 <img
-                  src={
-                    cover
-                      ? URL.createObjectURL(cover)
-                      : "/upload/" + user.coverPic
-                  }
+                  src={cover ? URL.createObjectURL(cover) : "/upload/" + user.coverPic}
                   alt=""
                 />
                 <CloudUploadIcon className="icon" />
@@ -90,11 +86,7 @@ const Update = ({ setOpenUpdate, user }) => {
               <span>Profile Picture</span>
               <div className="imgContainer">
                 <img
-                  src={
-                    profile
-                      ? URL.createObjectURL(profile)
-                      : "/upload/" + user.profilePic
-                  }
+                  src={profile ? URL.createObjectURL(profile) : "/upload/" + user.profilePic}
                   alt=""
                 />
                 <CloudUploadIcon className="icon" />
